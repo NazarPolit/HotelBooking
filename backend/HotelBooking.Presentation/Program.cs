@@ -1,4 +1,9 @@
 
+using AutoMapper;
+using HotelBooking.Application.Common.Mappings;
+using HotelBooking.Domain.Interfaces;
+using HotelBooking.Infrastructure.Persistence.Repositories;
+
 namespace HotelBooking.Presentation
 {
     public class Program
@@ -10,6 +15,11 @@ namespace HotelBooking.Presentation
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
