@@ -1,8 +1,9 @@
-
 using AutoMapper;
 using HotelBooking.Application.Common.Mappings;
 using HotelBooking.Domain.Interfaces;
+using HotelBooking.Infrastructure.Persistence.DbContext;
 using HotelBooking.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelBooking.Presentation
 {
@@ -23,6 +24,11 @@ namespace HotelBooking.Presentation
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             var app = builder.Build();
 
