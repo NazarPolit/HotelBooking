@@ -1,4 +1,5 @@
 ﻿using HotelBooking.Application.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBooking.Presentation.Controllers
@@ -15,6 +16,7 @@ namespace HotelBooking.Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> CreateHotel([FromBody] CreateAndUpdateHotelDto dto)
         {
             if (!ModelState.IsValid)
