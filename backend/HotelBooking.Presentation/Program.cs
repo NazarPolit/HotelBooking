@@ -1,6 +1,6 @@
 using AutoMapper;
 using HotelBooking.Application.Common.Mappings;
-using HotelBooking.Application.Dto;
+using HotelBooking.Application.Interfaces;
 using HotelBooking.Application.Services;
 using HotelBooking.Domain.Interfaces;
 using HotelBooking.Infrastructure.Identity;

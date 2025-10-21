@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelBooking.Application.Dto;
+using HotelBooking.Application.Interfaces;
 using HotelBooking.Domain.Entities;
 using HotelBooking.Domain.Interfaces;
 using System;
@@ -31,5 +32,54 @@ namespace HotelBooking.Application.Services
             return _mapper.Map<HotelDto>(hotel);
         }
 
+        public async Task<string?> DeleteHotelAsync(int id)
+        {
+            var hotel = await _unitOfWork.Hotels.GetByIdAsync(id);
+
+            if (hotel == null)
+            {
+                return "Hotel not found.";
+            }
+
+            _unitOfWork.Hotels.Delete(hotel);
+            await _unitOfWork.CompleteAsync();
+
+            return null;
+        }
+
+        public async Task<List<HotelDto>> GetAllHotelsAsync()
+        {
+            var hotels = await _unitOfWork.Hotels.GetAllAsync();
+            var hotelsDto = _mapper.Map<List<HotelDto>>(hotels);
+
+            return hotelsDto;
+
+        }
+
+        public async Task<HotelDetailsDto?> GetHotelWithRooms(int id)
+        {
+            var hotel = await _unitOfWork.Hotels.GetHotelWithRooms(id);
+
+            if (hotel == null)
+                return null;
+
+            return _mapper.Map<HotelDetailsDto>(hotel);
+        }
+
+        public async Task<string?> UpdateHotelAsync(int id, CreateAndUpdateHotelDto dto)
+        {
+            var hotel = await _unitOfWork.Hotels.GetByIdAsync(id);
+
+            if (hotel == null)
+                return null;
+
+            _mapper.Map(dto, hotel);
+
+            _unitOfWork.Hotels.Update(hotel);
+            await _unitOfWork.CompleteAsync();
+
+            return null;
+
+        }
     }
 }

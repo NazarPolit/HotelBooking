@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace HotelBooking.Application.Dto
 {
-    public interface IHotelService
+    public class RoomDto
     {
-        Task<HotelDto> CreateHotelAsync(CreateAndUpdateHotelDto dto);
+        public int Id { get; set; }
+        public decimal PricePerNight { get; set; }
+        public int Capacity { get; set; }
     }
 }

@@ -15,6 +15,8 @@ namespace HotelBooking.Application.Common.Mappings
         {
             CreateMap<CreateAndUpdateHotelDto, Hotel>();
             CreateMap<Hotel, HotelDto>();
+            CreateMap<Room, RoomDto>();
+            CreateMap<Hotel, HotelDetailsDto>();
         }
     }
 }

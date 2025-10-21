@@ -9,6 +9,6 @@ namespace HotelBooking.Domain.Interfaces
 {
     public interface IHotelRepository : IGenericRepository<Hotel>
     {
-
+        Task<Hotel?> GetHotelWithRooms(int id);
     }
 }

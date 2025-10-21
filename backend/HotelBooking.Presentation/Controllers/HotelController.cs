@@ -1,6 +1,9 @@
 ﻿using HotelBooking.Application.Dto;
+using HotelBooking.Application.Interfaces;
+using HotelBooking.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HotelBooking.Presentation.Controllers
 {
@@ -26,15 +29,58 @@ namespace HotelBooking.Presentation.Controllers
 
             var createdHotel = await _hotelService.CreateHotelAsync(dto);
 
-            return CreatedAtAction(nameof(GetHotelById), new {id = createdHotel.Id}, createdHotel);
+            return Ok(createdHotel);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetHotelById(int id)
+        public async Task<IActionResult> GetHotelByIdWithRooms(int id)
         {
-            // Заглушка, щоб CreatedAtAction працював
-            // Тут буде виклик _hotelService.GetHotelByIdAsync(id)
-            return Ok(new { Message = $"Hotel with id {id} will be here." });
+            var hotelWithRooms = await _hotelService.GetHotelWithRooms(id);
+
+            if (hotelWithRooms == null)
+            {
+                return NotFound(new { message = "Not Found" });
+            }
+
+            return Ok(hotelWithRooms);
         }
+
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Hotel>))]
+        public async Task<IActionResult> GetAllHotels()
+        {
+            var hotels = await _hotelService.GetAllHotelsAsync();
+            return Ok(hotels);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteHotel(int id)
+        {
+            var errorMessage = await _hotelService.DeleteHotelAsync(id);
+
+            if (errorMessage != null)
+                return BadRequest(new { message = errorMessage });
+
+            return NoContent();
+
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateHotel(int id, [FromBody] CreateAndUpdateHotelDto dto)
+        {
+            var errorMessage = await _hotelService.UpdateHotelAsync(id, dto);
+
+            if (errorMessage != null)
+                return BadRequest(new { message = errorMessage });
+
+            return NoContent();
+        }
+
     }
 }
