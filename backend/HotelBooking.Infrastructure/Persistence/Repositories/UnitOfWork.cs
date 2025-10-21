@@ -13,11 +13,13 @@ namespace HotelBooking.Infrastructure.Persistence.Repositories
         private readonly ApplicationDbContext _context;
 
         public IHotelRepository Hotels { get; private set; }
+        public IRoomRepository Rooms { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Hotels = new HotelRepository(_context);
+            Rooms = new RoomRepository(_context);
         }
 
         public async Task<int> CompleteAsync() => await _context.SaveChangesAsync();

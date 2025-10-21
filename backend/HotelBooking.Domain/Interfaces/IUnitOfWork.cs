@@ -9,6 +9,7 @@ namespace HotelBooking.Domain.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IHotelRepository Hotels { get; }
+        IRoomRepository Rooms { get; }
 
         Task<int> CompleteAsync();
     }

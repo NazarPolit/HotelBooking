@@ -21,6 +21,8 @@ namespace HotelBooking.Infrastructure.Persistence.DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Hotel>()
                 .HasMany(h => h.Rooms)
                 .WithOne(r => r.Hotel)
