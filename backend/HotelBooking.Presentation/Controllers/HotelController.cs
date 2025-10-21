@@ -57,6 +57,7 @@ namespace HotelBooking.Presentation.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
             var errorMessage = await _hotelService.DeleteHotelAsync(id);
@@ -72,6 +73,7 @@ namespace HotelBooking.Presentation.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> UpdateHotel(int id, [FromBody] CreateAndUpdateHotelDto dto)
         {
             var errorMessage = await _hotelService.UpdateHotelAsync(id, dto);
