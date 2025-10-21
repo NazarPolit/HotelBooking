@@ -48,6 +48,18 @@ namespace HotelBooking.Application.Services
             return null;
         }
 
+        public async Task<RoomDto> GetRoomByIdAsync(int roomId)
+        {
+            var room = await _unitOfWork.Rooms.GetByIdAsync(roomId);
+
+            if (room == null)
+            {
+                return null;
+            }
+
+            return _mapper.Map<RoomDto>(room);
+        }
+
         public async Task<string?> UpdateRoomAsync(int roomId, UpdateRoomDto dto)
         {
             var room = await _unitOfWork.Rooms.GetByIdWithHotel(roomId);

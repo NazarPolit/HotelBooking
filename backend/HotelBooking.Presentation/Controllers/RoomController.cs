@@ -1,5 +1,6 @@
 ﻿using HotelBooking.Application.Dto;
 using HotelBooking.Application.Interfaces;
+using HotelBooking.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -17,6 +18,19 @@ namespace HotelBooking.Presentation.Controllers
             _roomService = roomService;
         }
 
+        [HttpGet("{roomId}")]
+        [ProducesResponseType(200, Type = typeof(RoomDto))]
+        public async Task<IActionResult> GetById(int roomId)
+        {
+            var roomDto = await _roomService.GetRoomByIdAsync(roomId);
+
+            if (roomDto == null)
+            {
+                return NotFound(new { message = "Not Found" });
+            }
+
+            return Ok(roomDto);
+        }
 
         [HttpPost]
         [ProducesResponseType(204)]

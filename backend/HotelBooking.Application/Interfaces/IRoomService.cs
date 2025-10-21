@@ -13,5 +13,6 @@ namespace HotelBooking.Application.Interfaces
         Task<Room> AddRoomAsync(CreateRoomDto dto);
         Task<string?> UpdateRoomAsync(int roomId, UpdateRoomDto dto);
         Task<string?> DeleteRoomAsync(int roomId);
+        Task<RoomDto> GetRoomByIdAsync(int roomId);
     }
 }
