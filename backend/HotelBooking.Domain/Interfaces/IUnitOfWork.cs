@@ -10,7 +10,7 @@ namespace HotelBooking.Domain.Interfaces
     {
         IHotelRepository Hotels { get; }
         IRoomRepository Rooms { get; }
-
+        IBookingRepository Bookings { get; }
         Task<int> CompleteAsync();
     }
 }

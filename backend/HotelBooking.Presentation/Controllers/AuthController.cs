@@ -45,6 +45,8 @@ namespace HotelBooking.Presentation.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
+            await _userManager.AddToRoleAsync(user, "Client");
+
             return Ok(new { message = "User successfully created." });
 
         }
