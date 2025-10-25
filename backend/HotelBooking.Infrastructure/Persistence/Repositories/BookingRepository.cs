@@ -43,7 +43,8 @@ namespace HotelBooking.Infrastructure.Persistence.Repositories
 
         public async Task<bool> IsRoomAvailableAsync(int roomId, DateTime proposedCheckIn, DateTime proposedCheckOut)
         {
-            bool conflictExists = await _context.Bookings.AnyAsync(b =>
+            bool conflictExists = await _context.Bookings
+                .AnyAsync(b =>
                     b.RoomId == roomId &&
                     (proposedCheckIn < b.DateTo && proposedCheckOut > b.DateFrom)
             );

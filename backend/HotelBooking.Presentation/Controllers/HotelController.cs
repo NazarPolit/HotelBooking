@@ -84,5 +84,23 @@ namespace HotelBooking.Presentation.Controllers
             return NoContent();
         }
 
-    }
+        [HttpGet("search")]
+		[ProducesResponseType(200, Type = typeof(IEnumerable<Hotel>))]
+		public async Task<IActionResult> GetAllAvaiableHotelsWithRooms(
+            [FromQuery] string city,
+            [FromQuery] DateTime dateFrom,
+            [FromQuery] DateTime dateTo
+        )
+		{
+			var hotels = await _hotelService.SearchAvailableRoomsAsync
+            (
+                city, 
+                dateFrom, 
+                dateTo
+            );
+
+			return Ok(hotels);
+		}
+
+	}
 }

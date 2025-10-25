@@ -56,7 +56,8 @@ namespace HotelBooking.Application.Services
 
         }
 
-        public async Task<HotelDetailsDto?> GetHotelWithRooms(int id)
+		
+		public async Task<HotelDetailsDto?> GetHotelWithRooms(int id)
         {
             var hotel = await _unitOfWork.Hotels.GetHotelWithRooms(id);
 
@@ -66,7 +67,17 @@ namespace HotelBooking.Application.Services
             return _mapper.Map<HotelDetailsDto>(hotel);
         }
 
-        public async Task<string?> UpdateHotelAsync(int id, CreateAndUpdateHotelDto dto)
+		public async Task<List<HotelDetailsDto>> SearchAvailableRoomsAsync(string city, DateTime dateFrom, DateTime dateTo)
+		{
+            var hotelsWithAvailableRooms = await _unitOfWork.Hotels
+                .GetAvailableHotelsAsync(city, dateFrom, dateTo);
+
+            var availableHotels = hotelsWithAvailableRooms.Where(h => h.Rooms.Any());
+
+            return _mapper.Map<List<HotelDetailsDto>>(availableHotels);
+ 		}
+
+		public async Task<string?> UpdateHotelAsync(int id, CreateAndUpdateHotelDto dto)
         {
             var hotel = await _unitOfWork.Hotels.GetByIdAsync(id);
 

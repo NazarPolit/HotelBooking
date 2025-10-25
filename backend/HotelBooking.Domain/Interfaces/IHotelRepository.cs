@@ -10,5 +10,6 @@ namespace HotelBooking.Domain.Interfaces
     public interface IHotelRepository : IGenericRepository<Hotel>
     {
         Task<Hotel?> GetHotelWithRooms(int id);
-    }
+		Task<List<Hotel>> GetAvailableHotelsAsync(string city, DateTime dateFrom, DateTime dateTo);
+	}
 }
