@@ -33,6 +33,8 @@ namespace HotelBooking.Presentation
             builder.Services.AddScoped<IHotelService, HotelService>();
             builder.Services.AddScoped<IRoomService, RoomService>();
             builder.Services.AddScoped<IBookigService, BookingService>();
+
+            builder.Services.AddScoped<IStatsRepository, StatsRepository>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 
